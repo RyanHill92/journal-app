@@ -15,7 +15,10 @@ app.get('/', (req, res) => {
 });
 
 app.post('/memories', (req, res) => {
-  let date = moment(req.body.date).format("ddd. MMM Do, YYYY");
+  let date = req.body.date;
+  //Account for zero-indexed months.
+  date[1] = date[1] - 1;
+  date = moment(date).format("ddd. MMM Do, YYYY");
   let memory = new Memory({
     text: req.body.text,
     location: req.body.location,
@@ -29,10 +32,18 @@ app.post('/memories', (req, res) => {
   });
 });
 
+app.get('/memories/:tag', (req, res) => {
+  let tag = req.params.tag;
+  //This query checks for docs whose tags array contains the tag element.
+  Memory.find({tags: tag}).then((memories) => {
+    res.json(memories);
+  }).catch((err) => res.json(err));
+});
+
 app.get('/memories', (req, res) => {
   Memory.find({}).then((memories) => {
     res.json(memories);
-  });
+  }).catch((err) => res.json(err));
 });
 
 app.listen(process.env.PORT, () => {

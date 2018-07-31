@@ -4,7 +4,7 @@
   "description": "An app to store memories",
   "main": "index.js",
   "scripts": {
-    "test": "mocha server/**/*.test.js --exit",
+    "test": "export NODE_ENV=test && mocha server/**/*.test.js --exit",
     "start": "node server/server.js"
   },
   "engines": {
