@@ -11,7 +11,7 @@ const app = express();
 app.use(bodyParser.json());
 
 app.get('/', (req, res) => {
-  res.json('Welcome!');
+  res.header({'Access-Control-Allow-Origin':'*'}).json('Welcome!');
 });
 
 app.post('/memories', (req, res) => {

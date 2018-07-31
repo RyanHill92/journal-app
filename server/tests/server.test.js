@@ -8,6 +8,20 @@ const {testMemories, populateMemories} = require('./seed');
 
 beforeEach(populateMemories);
 
+describe('GET /memories', () => {
+  it('should return a list of all memories', (done) => {
+    request(app)
+      .get('/memories')
+      .expect(200)
+      .expect((res) => {
+        expect(res.body.length).toBe(2);
+        expect(res.body[0]).toHaveProperty('text', 'I remember the day I was born.');
+        expect(res.body[1].tags.length).toBe(2);
+      })
+      .end(done);
+  });
+});
+
 describe('GET /memories/:tag', () => {
   it('should return an array of memories whose tag arrays include the tag', (done) => {
     let tag = testMemories[0].tags[1];
