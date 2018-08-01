@@ -26,7 +26,7 @@ app.post('/memories', (req, res) => {
     date
   });
   memory.save().then((memory) => {
-    res.status(200).json(memory);
+    res.status(200).header({'Access-Control-Allow-Origin':'*'}).json(memory);
   }).catch((err) => {
     res.status(400).json(err);
   });
