@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "test": "export NODE_ENV=test && mocha server/**/*.test.js --exit",
-    "start": "node server/server.js"
+    "start": "nodemon server/server.js",
+    "dev": "concurrently \"npm run dev --prefix client\" \"npm run start\"",
+    "client-install": "npm install --prefix client"
   },
   "engines": {
     "node": "10.5.0"
@@ -13,10 +15,15 @@
   "author": "Ryan Hill",
   "license": "ISC",
   "dependencies": {
+    "axios": "^0.18.0",
+    "bcryptjs": "^2.4.3",
     "body-parser": "^1.18.3",
+    "cors": "^2.8.4",
     "express": "^4.16.3",
+    "jsonwebtoken": "^8.3.0",
     "moment": "^2.22.2",
-    "mongoose": "^5.2.5"
+    "mongoose": "^5.2.5",
+    "validator": "^10.5.0"
   },
   "devDependencies": {
     "expect": "^23.4.0",

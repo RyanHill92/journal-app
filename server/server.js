@@ -3,14 +3,17 @@ require('./config/config');
 const express = require('express');
 const bodyParser = require('body-parser');
 const moment = require('moment');
+const cors = require('cors');
 
 //Express Router modules.
 const memories = require('./routes/memories');
+const users = require('./routes/users');
 
 //Create the app.
 const app = express();
 //Use body parser middleware.
 app.use(bodyParser.json());
+app.use(cors());
 
 //Main GET / route.
 app.get('/', (req, res) => {
@@ -18,7 +21,8 @@ app.get('/', (req, res) => {
 });
 
 //Routes
-app.use('/api/memories', memories)
+app.use('/api/memories', memories);
+app.use('/api/users', users);
 
 app.listen(process.env.PORT, () => {
   console.log('Server up on ', process.env.PORT);
