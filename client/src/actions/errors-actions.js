@@ -5,14 +5,14 @@ const setErrors = (category, errors) => {
     category,
     errors
   };
-}
+};
 
 const clearErrors = category => {
   return {
     type: 'CLEAR_ERRORS',
     category
   };
-}
+};
 
 const errorsActions = {
   setErrors,

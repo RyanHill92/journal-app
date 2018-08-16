@@ -8,7 +8,7 @@ const loginUserAsync = (email, password) => {
       password
     };
 
-    //Returned function MUST return a promise. Didn't work without. 
+    //Returned function MUST return a promise. Didn't work without.
     return axios.post('/api/users/login', loginObject)
       .then(res => {
         console.log(res.data);
@@ -20,8 +20,32 @@ const loginUserAsync = (email, password) => {
         dispatch(errorsActions.setErrors('login', errors));
       });
   }
-}
+};
 
-export default {
-  loginUserAsync
-}
+const registerUserAsync = (email, password, confirm) => {
+  return function (dispatch) {
+    const registerObject = {
+      email,
+      password,
+      confirm
+    };
+
+    return axios.post('/api/users/register', registerObject)
+      .then(res => {
+        console.log(res.data);
+        dispatch(errorsActions.clearErrors('register'));
+      })
+      .catch(err => {
+        let errors = !err.response ? err : err.response.data;
+        console.log(errors);
+        dispatch(errorsActions.setErrors('register', errors));
+      });
+  }
+};
+
+const userActions = {
+  loginUserAsync,
+  registerUserAsync
+};
+
+export default userActions;

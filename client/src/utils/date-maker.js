@@ -15,8 +15,8 @@ function dateMaker(day, month, year) {
   return date;
 }
 
-let testOutput = dateMaker('', '', '1992');
-console.log(testOutput);
+// let testOutput = dateMaker('', '', '1992');
+// console.log(testOutput);
 
 export default dateMaker;
 // module.exports = {dateMaker};
