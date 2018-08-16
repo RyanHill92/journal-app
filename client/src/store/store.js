@@ -3,6 +3,7 @@ import thunk from 'redux-thunk';
 
 import userReducer from './../reducers/user-reducer';
 import errorsReducer from './../reducers/errors-reducer';
+import memoriesReducer from './../reducers/memories-reducer';
 
 const initialState = {
   user: {
@@ -11,16 +12,19 @@ const initialState = {
     isAuth: false
   },
   errors: {
-    memory: {},
+    memoryDate: {},
+    memoryBody: {},
     login: {},
     register: {}
-  }
+  },
+  memories: []
 }
 
 const rootReducer = (state, action) => {
   return {
     user: userReducer(state.user, action),
-    errors: errorsReducer(state.errors, action)
+    errors: errorsReducer(state.errors, action),
+    memories: memoriesReducer(state.memories, action)
   };
 }
 

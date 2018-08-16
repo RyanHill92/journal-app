@@ -1,11 +1,7 @@
 const mongoose = require('mongoose');
 
-const notEmpty = function(tags) {
-  if (tags.length === 0) {
-    return false;
-  } else if (tags.length >= 1) {
-    return true;
-  }
+const notEmpty = function(arr) {
+  return arr.length >= 1;
 }
 
 //If memory is from current date, leave blank to trigger default.
@@ -33,6 +29,10 @@ const MemorySchema = new mongoose.Schema({
     type: Array,
     required: true,
     validate: [notEmpty, 'Please add at least one tag.']
+  },
+  _creator: {
+    type: mongoose.Schema.Types.ObjectId,
+    required: true
   }
 });
 

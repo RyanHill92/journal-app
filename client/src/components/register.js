@@ -36,6 +36,7 @@ const Register = ({
               </label>
               <input
                 ref={node => email = node}
+                name="email"
                 type="email"
                 className={classNames('form-control', {
                   'is-invalid': errors.email
@@ -53,6 +54,7 @@ const Register = ({
               </label>
               <input
                 ref={node => password = node}
+                name="password"
                 type="password"
                 className={classNames('form-control', {
                   'is-invalid': errors.password
@@ -70,6 +72,7 @@ const Register = ({
               </label>
               <input
                 ref={node => confirm = node}
+                name="confirm"
                 type="password"
                 className={classNames('form-control', {
                   'is-invalid': errors.confirm

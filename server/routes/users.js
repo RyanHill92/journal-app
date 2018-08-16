@@ -26,8 +26,8 @@ router.post('/login', (req, res) => {
   //Call custom static method to verify that account exists and email/pass are valid.
   User.findByCredentials(login.email, login.password).then(user => {
     return user.generateToken();
-  }).then(user => {
-    res.status(200).json(user);
+  }).then(token => {
+    res.status(200).json({message: 'Logged in', token});
   }).catch(e => {
     //If only one field, custom error object thrown by findByCredentials.
     Object.keys(e).length === 1

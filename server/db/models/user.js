@@ -19,10 +19,6 @@ const UserSchema = new mongoose.Schema({
     type: String,
     required: true,
     minlength: 6
-  },
-  token: {
-    type: String,
-    default: null
   }
 });
 
@@ -32,7 +28,6 @@ UserSchema.methods.toJSON = function () {
   let userObject = this.toObject();
   return {
     email: userObject.email,
-    token: userObject.token,
     _id: userObject._id
   };
 };
@@ -41,11 +36,7 @@ UserSchema.methods.toJSON = function () {
 UserSchema.methods.generateToken = function () {
   let token = jwt.sign({_id: this._id.toHexString(), email: this.email}, secret, {expiresIn: '1h'});
 
-  this.token = token;
-
-  return this.save().then(user => {
-    return user;
-  });
+  return token;
 }
 
 UserSchema.methods.clearToken = function () {
