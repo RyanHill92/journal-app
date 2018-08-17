@@ -2,9 +2,9 @@
 const userReducer = (state, action) => {
   switch(action.type) {
     case 'LOGIN_USER':
-      return {isAuth: true, email: action.email, token: user.token};
+      return {isAuth: true, _id: action._id};
     case 'LOGOUT_USER':
-      return {isAuth: false, email: '', token: ''};
+      return {isAuth: false, _id: ''};
     default:
       return state;
   }

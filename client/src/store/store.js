@@ -4,21 +4,9 @@ import thunk from 'redux-thunk';
 import userReducer from './../reducers/user-reducer';
 import errorsReducer from './../reducers/errors-reducer';
 import memoriesReducer from './../reducers/memories-reducer';
+import StateSaver from './state-saver';
 
-const initialState = {
-  user: {
-    email: '',
-    token: '',
-    isAuth: false
-  },
-  errors: {
-    memoryDate: {},
-    memoryBody: {},
-    login: {},
-    register: {}
-  },
-  memories: []
-}
+const stateSaver = new StateSaver();
 
 const rootReducer = (state, action) => {
   return {
@@ -28,13 +16,18 @@ const rootReducer = (state, action) => {
   };
 }
 
+//Call load, not initialize, in case of refresh.
 const store = createStore(
   rootReducer,
-  initialState,
+  stateSaver.loadState(),
   compose(
     applyMiddleware(thunk),
     window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
   )
 );
+
+store.subscribe(() => {
+  stateSaver.saveState(store.getState());
+});
 
 export default store;

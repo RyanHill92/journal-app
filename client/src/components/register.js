@@ -1,8 +1,11 @@
+'use strict';
+
 import React from 'react';
 import {connect} from 'react-redux';
 import axios from './../utils/axios-config';
 import classNames from 'classnames';
 import userActions from './../actions/user-actions';
+import PropTypes from 'prop-types';
 
 //Will either get back an errors object with email, password, and/or password 2 fields
 //OR
@@ -10,7 +13,8 @@ import userActions from './../actions/user-actions';
 
 const Register = ({
   errors,
-  registerUser
+  registerUser,
+  ...props
 }) => {
   let email;
   let password;
@@ -92,13 +96,21 @@ const Register = ({
       </div>
     </div>
   );
-}
+};
+
+Register.propTypes = {
+  errors: PropTypes.object.isRequired,
+  registerUser: PropTypes.func.isRequired,
+  match: PropTypes.object.isRequired,
+  location: PropTypes.object.isRequired,
+  history: PropTypes.object.isRequired
+};
 
 const mapStateToProps = state => {
   return {
     errors: state.errors.register
   };
-}
+};
 
 const mapDispatchToProps = dispatch => {
   return {
@@ -106,7 +118,7 @@ const mapDispatchToProps = dispatch => {
       dispatch(userActions.registerUserAsync(email, password, confirm))
     }
   };
-}
+};
 
 const styles = {
   form: {
@@ -117,7 +129,7 @@ const styles = {
     right: 0,
     bottom: 0
   }
-}
+};
 
 export default connect(
   mapStateToProps,

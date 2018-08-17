@@ -1,3 +1,5 @@
+'use strict';
+
 const setErrors = (category, errors) => {
   return {
     type: 'SET_ERRORS',

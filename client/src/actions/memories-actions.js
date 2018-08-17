@@ -1,11 +1,21 @@
+'use strict';
+
 import axios from './../utils/axios-config';
 import errorsActions from './errors-actions';
 import dateErrorsCatcher from './../utils/date-errors-catcher';
 import dateMaker from './../utils/date-maker';
 import tagsMaker from './../utils/tags-maker';
 
+const getAllMemoriesAsync = () => {
+  return function (dispatch) {
+    return axios.get('/api/memories')
+      .then(res => console.log(res.data))
+      .catch(e => console.log(e));
+  }
+};
+
 //Takes an object with seven props: day, month, year, location, text, tags, and _creator.
-const postMemoryAsync = (memory) => {
+const postMemoryAsync = memory => {
   return function (dispatch) {
     let {day, month, year, location, text, tags, _id} = memory;
 
@@ -30,11 +40,7 @@ const postMemoryAsync = (memory) => {
       _creator: _id
     };
 
-    return axios.post('/api/memories', memoryObject, {
-      headers: {
-        'x-auth': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1Yjc1OGFiMWEyMGMzODZkNTZhMDU5YjEiLCJlbWFpbCI6InJ5YW5jaGlsbDMxOUBnbWFpbC5jb20iLCJpYXQiOjE1MzQ0MzQ0NjEsImV4cCI6MTUzNDQzODA2MX0.4IePBsYcGN3J5UwrcES5nvJO_dhrmhvVS5Kkjv4SrkU'
-      }
-    })
+    return axios.post('/api/memories', memoryObject)
       .then(res => {
         console.log(res.data);
         dispatch(errorsActions.clearErrors('memoryBody'));
@@ -51,10 +57,11 @@ const postMemoryAsync = (memory) => {
         }
       });
   };
-}
+};
 
 const memoriesActions = {
-  postMemoryAsync
+  postMemoryAsync,
+  getAllMemoriesAsync
 };
 
 export default memoriesActions;

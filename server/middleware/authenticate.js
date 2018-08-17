@@ -1,3 +1,5 @@
+'use strict';
+
 const {User} = require('./../db/models/user');
 const jwt = require('jsonwebtoken');
 const secret = process.env.jwt_secret;

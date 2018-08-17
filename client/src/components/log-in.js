@@ -1,11 +1,16 @@
+'use strict';
+
 import React from 'react';
 import {connect} from 'react-redux';
 import classNames from 'classnames';
 import userActions from './../actions/user-actions';
+import PropTypes from 'prop-types';
 
 const LogIn = ({
   errors,
-  loginUser
+  loginUser,
+  match,
+  ...props
 }) => {
   let email;
   let password;
@@ -18,7 +23,7 @@ const LogIn = ({
           <form
             onSubmit={e => {
               e.preventDefault();
-              loginUser(email.value, password.value);
+              loginUser(email.value, password.value, props.history);
             }}
             >
             <div className="form-group">
@@ -67,19 +72,27 @@ const LogIn = ({
   );
 }
 
+LogIn.propTypes = {
+  errors: PropTypes.object.isRequired,
+  loginUser: PropTypes.func.isRequired,
+  match: PropTypes.object.isRequired,
+  location: PropTypes.object.isRequired,
+  history: PropTypes.object.isRequired
+};
+
 const mapStateToProps = state => {
   return {
     errors: state.errors.login
   };
-}
+};
 
 const mapDispatchToProps = dispatch => {
   return {
-    loginUser: (email, password) => {
-      dispatch(userActions.loginUserAsync(email, password))
+    loginUser: (email, password, history) => {
+      dispatch(userActions.loginUserAsync(email, password, history))
     }
   };
-}
+};
 
 const styles = {
   form: {
@@ -90,7 +103,7 @@ const styles = {
     right: 0,
     bottom: 0
   }
-}
+};
 
 //Cool technique learned from Brad--call connect() in the export statement.
 export default connect(
